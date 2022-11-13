@@ -23,32 +23,35 @@ var wg = sync.WaitGroup{}
 
 func main() {
 	greetUsers()
-	firstname, lastname, email, userTickets := getUserInputs()
+	for {
 
-	isValidEmail, isValidName, isValidTicketNumber := helper.ValidateInput(firstname, lastname, email, userTickets, remainingTickets)
-	if isValidEmail && isValidName && isValidTicketNumber {
-		bookTicket(userTickets, firstname, lastname, email)
-		wg.Add(1)
-		go sendTicket(userTickets, firstname, lastname, email)
-		firstnames := printFirstnames()
-		fmt.Printf("These are firstnames of  the bookings in the application: %v\n", firstnames)
-		if remainingTickets == 0 {
-			fmt.Println("Our conference is booked out. come back next year.")
+		firstname, lastname, email, userTickets := getUserInputs()
 
+		isValidEmail, isValidName, isValidTicketNumber := helper.ValidateInput(firstname, lastname, email, userTickets, remainingTickets)
+		if isValidEmail && isValidName && isValidTicketNumber {
+			bookTicket(userTickets, firstname, lastname, email)
+			wg.Add(1)
+			go sendTicket(userTickets, firstname, lastname, email)
+			firstnames := printFirstnames()
+			fmt.Printf("These are firstnames of  the bookings in the application: %v\n", firstnames)
+			if remainingTickets == 0 {
+				fmt.Println("Our conference is booked out. come back next year.")
+				break
+			}
+		} else {
+			if !isValidName {
+				fmt.Println("firstname or lastname your entered is too short")
+			} else if !isValidEmail {
+				fmt.Println("email addres you entered is doesn't contain @ in it")
+			} else if !isValidTicketNumber {
+				fmt.Println("number of ticket you entered is invalid")
+			}
+			continue
 		}
-	} else {
-		if !isValidName {
-			fmt.Println("firstname or lastname your entered is too short")
-		} else if !isValidEmail {
-			fmt.Println("email addres you entered is doesn't contain @ in it")
-		} else if !isValidTicketNumber {
-			fmt.Println("number of ticket you entered is invalid")
-		}
-
+		wg.Wait()
 	}
-	wg.Wait()
-}
 
+}
 func greetUsers() {
 	fmt.Printf("Welcome to %v booking application\n", conferenceName)
 	fmt.Printf("We have total of %v tickets and %v are still available\n", conferenceTickets, remainingTickets)
