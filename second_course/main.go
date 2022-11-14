@@ -3,7 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	var r = complex(3, 2)
-	fmt.Printf("%v %T\n", real(r), r)
-	fmt.Printf("%v %T", imag(r), r)
+	a := []int {1, 2, 3, 4, 5}
+	fmt.Println(a)
+	b := append(a[:2], a[3:]...)
+	fmt.Println(b)
+	fmt.Print(a)
 }
