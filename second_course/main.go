@@ -2,11 +2,20 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 func main() {
-	s := [3]int{1, 2, 4}
-	for k, v := range s{
-		fmt.Println(k, v)
+	res, err := http.Get("http://www.google.com/robots.txt")
+	if err != nil {
+		log.Fatal(err)
 	}
+	defer res.Body.Close()
+	robots, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("%s", robots)
 }
