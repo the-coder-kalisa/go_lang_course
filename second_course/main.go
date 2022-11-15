@@ -3,14 +3,12 @@ package main
 import "fmt"
 
 func main() {
-	statePulations := make(map[string]int)
-	statePulations = map[string]int{
-		"Califon": 10,
-		"Texas": 100,
+	switch i := 2 + 3; i {
+	case 1, 5, 10:
+		fmt.Println("one")
+	case 2, 4, 6:
+		fmt.Println("two")
+	default:
+		fmt.Println("not one or two")
 	}
-	statePulations["Georgia"] = 1000
-	delete(statePulations, "Texas")
-	if pop, ok := statePulations["Georgia"]; ok {
-		fmt.Println(pop)
-	} 
 }
