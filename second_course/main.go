@@ -1,11 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
+
+type Animal struct {
+	Name   string `required max:"100"`
+	Origin string
+}
+
+type Bird struct {
+	Animal
+	SpeedKPH float32
+	canFly   bool
+}
 
 func main() {
-	a := []int {1, 2, 3, 4, 5}
-	fmt.Println(a)
-	b := append(a[:2], a[3:]...)
-	fmt.Println(b)
-	fmt.Print(a)
+	t := reflect.TypeOf(Animal{})
+	filed, _ := t.FieldByName("Name")
+	fmt.Println(filed.Tag)
 }
