@@ -1,23 +1,16 @@
 package main
 
-import (
-	"fmt"
-	"reflect"
-)
-
-type Animal struct {
-	Name   string `required max:"100"`
-	Origin string
-}
-
-type Bird struct {
-	Animal
-	SpeedKPH float32
-	canFly   bool
-}
+import "fmt"
 
 func main() {
-	t := reflect.TypeOf(Animal{})
-	filed, _ := t.FieldByName("Name")
-	fmt.Println(filed.Tag)
+	statePulations := make(map[string]int)
+	statePulations = map[string]int{
+		"Califon": 10,
+		"Texas": 100,
+	}
+	statePulations["Georgia"] = 1000
+	delete(statePulations, "Texas")
+	if pop, ok := statePulations["Georgia"]; ok {
+		fmt.Println(pop)
+	} 
 }
